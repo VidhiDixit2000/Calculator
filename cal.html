@@ -1,0 +1,328 @@
+   <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .frame{
+        width:1468px;
+        height:998px;
+        border:1px;
+        display: flex;
+        flex-direction:column;
+        background-color:#3b4664;
+        justify-content:center;
+        align-items:center;
+    }
+
+    .screen{
+        position:relative;
+    background-color:#181f32;
+    width: 536px;
+    height:142.73px;
+    border-radius: 12px;
+    margin-bottom:1rem;
+    
+
+   }
+   .customText{
+  position: absolute;
+   background-color:orange;
+    width:276px;
+    height:42px;
+   left:13.75rem;
+    top:3rem;
+    z-index:1;
+
+   }
+    .gridcontainer{
+        background-color:#252D44;
+        width: 536px;
+       height: 487px;
+        display:grid;
+        gap: 23px;
+        grid-template-areas:"num7 num8 num9 DEL"
+                            "num4 num5 num6 add"
+                            "num1 num2 num3 sub"
+                            "float num0 div multiply"
+                            "reset reset eq eq";
+
+         padding:48px 35px;
+         box-sizing: border-box;
+         gap:22px;
+         border-radius:12px;
+    }
+    .button0{
+             grid-area:num0;
+    }
+    .button1{
+             grid-area:num1;
+    }
+    .button2{
+            grid-area:num2;           
+    }
+    .button3{
+            grid-area:num3;
+    }
+    .button4{
+            grid-area:num4;
+    }
+    .button5{
+            grid-area:num5;
+    }
+    .button6{
+            grid-area:num6;
+    }
+    .button7{
+            grid-area:num7;
+    }
+    .button8{
+            grid-area:num8;
+    }
+    .button9{
+                grid-area:num9;
+    }
+    #buttonfloat{
+                   grid-area:float;
+    }
+    .buttondiv{
+                  grid-area:div;
+    }
+   #buttoneq{
+                   grid-area:eq;
+   }
+   .buttonadd{
+                grid-area:add;
+   }
+   .buttonsub{
+                  grid-area:sub;
+   }
+   .buttonx{
+                   grid-area:multiply;
+   }
+   .buttonDEL{
+                  grid-area:DEL;
+                   width: 100px;
+                  height: 60px;    
+                background-color:grey;
+                 border-radius:11.52px; 
+                 font-size:24px; 
+   }
+   #buttonRESET{
+                   grid-area:reset;
+   }
+
+   .item{
+    background-color: #eae3db;
+    width: 100px;
+     height: 60px;
+     font-size:30px;
+     font-family:'inter',sans-serif;
+     font-weight:800;
+     line-height:100%;
+     letter-spacing:0%;
+     text-align:center
+   }
+.itemop{
+    background-color: #eae3db;
+    width: 100px;
+     height: 60px;
+     font-size:30px;
+     font-family:'inter',sans-serif;
+     font-weight:800;
+     line-height:100%;
+     letter-spacing:0%;
+     text-align:center
+}
+
+   .itemr {
+     padding: 12px;
+     background-color:grey;
+     height: 60px;
+     font-size: 23.05px;
+     
+   }
+     
+   .itemeq{
+    background-color:#d13f30 ;
+     height: 60px;
+     font-size: 23.05px;
+    
+   }
+
+   .item,.itemr,.itemeq{
+     border-radius:11.52px;   
+   }
+
+   .itemr,.itemeq,#buttonDEL{
+        font-family:'inter',sans-serif;
+        font-weight:800;
+        line-height:100%;
+        text-align:center;    
+
+   }
+   
+ 
+</style>
+<body>
+    <div class="frame">
+        <div class="screen">
+                <input type="text" id="ip" name="Usertext" class="customText">
+        
+        </div>
+            <div class="gridcontainer">
+                <button class="button0 item" value="0">0</button>
+                <button class="button1 item" value="1">1</button>
+                <button class="button2 item" value="2">2</button>
+                <button class="button3 item" value="3">3</button>
+                <button class="button4 item" value="4">4</button>
+                <button class="button5 item" value="5">5</button>
+                <button class="button6 item" value="6">6</button>
+                <button class="button7 item" value="7">7</button>
+                <button class="button8 item" value="8">8</button>
+                <button class="button9 item" value="9">9</button>
+                <button id="buttonfloat" class="itemop" value=".">&#46;</button>
+                <button class="buttondiv itemop" value="/">/</button>
+                <button class="buttonx itemop" value="*">x</button>
+                <button id="buttoneq" class="itemeq" value="=">=</button>
+                <button class="buttonadd itemop" value="+">+</button>
+                <button class="buttonsub itemop" value="-">-</button>
+                <button id="buttonDEL" >DEL</button>
+                <button id="buttonRESET" class="itemr" >RESET</button>
+            </div>
+    </div>
+    <script>
+
+let input= document.getElementById("ip");
+
+
+let numItems = document.getElementsByClassName("item");
+var arr=[];
+       //console.log(numItems);
+
+//attaching the event listener to each of the items of the loop
+//let ans=0;
+//let numlast=0;
+//let lastop='';
+//let prevChar='';
+let isDelrun=null;
+let arr2=[];
+for (let i = 0; i < numItems.length; i++) {
+    numItems[i].addEventListener("click", Calculation);
+}
+    function Calculation(event) {
+      let prev=arr.pop();
+      arr.push(prev);
+
+      if(prev!=='Error')
+      {
+        input.value+=event.target.value;
+      }
+      else{
+        input.value=event.target.value;
+      }
+      //arr2.push(event.target.value);
+      arr.push(event.target.value);
+}
+
+
+ let opItems= document.querySelectorAll(".buttonadd,.buttonsub,.buttonx,.buttondiv");
+  for (let i = 0; i < opItems.length; i++) {
+         opItems[i].addEventListener("click",op);
+            
+}
+function op(event) {
+    let prev=arr.pop();
+    arr.push(prev);
+    if (['+', '-', '*', '/', '.'].includes(prev))
+    {
+        console.log('error');
+         input.value='Error';
+         arr.push('Error');
+        return;    
+    } 
+    //arr2=event.target.value;
+     console.log(event.target.value);
+             arr.push(event.target.value);
+             
+             //numlast=0;
+             input.value+=event.target.value;
+}
+
+let eqItem= document.getElementById("buttoneq");
+  eqItem.addEventListener("click",eq);
+
+let DeleteEq= document.getElementById("buttonDEL");
+  DeleteEq.addEventListener("click",Del);
+
+let Reseteq= document.getElementById("buttonRESET");
+  Reseteq.addEventListener("click",Reset);
+
+let floateq= document.getElementById("buttonfloat");
+  floateq.addEventListener("click",float);
+
+
+
+  function Del(event)
+{
+     let calstring='';
+     console.log(event);
+
+     input.value=input.value.slice(0,-1);
+     console.log(input.value);
+     calstring=input.value;
+
+     let check=calstring.slice(-1);
+     console.log(check);
+     if(isNaN(check))
+     {
+          console.log('hieeeeeeee');
+            calstring=calstring.slice(0,-1);
+            arr2=calstring;
+            console.log('cal'+calstring);
+            console.log(input.value);
+            isDelrun=1;
+        
+     }
+     console.log(eval(calstring));
+    }
+function Reset(event)
+{
+        //inputarr.splice(0,arr.length);
+        //ans=0;
+        //numlast=0;
+        //console.log(ans);
+        //console.log(numlast);
+        console.log(arr);
+       input.value='';
+
+}
+function eq(event)
+{
+  if(isDelrun!==null && isDelrun===1 )
+  {
+   input.value=eval(calstring); 
+   isDelrun=0;
+  } 
+      
+        //numlast=0;
+        //arr.push(event.target.value);
+        arr2=input.value;
+        input.value+=event.target.value;
+        console.log('arr2'+ arr2);
+        input.value=eval(arr2);    
+}
+function float(event)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+{
+    //console.log(event.target.value);
+     //arr.push(event.target.value);
+    //console.log("numlast:in float "+ numlast);
+    input.value+=event.target.value;
+    arr.push(event.target.value);
+    //arr2=event.target.value;
+     
+}
+
+</script>
